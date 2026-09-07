@@ -48,7 +48,42 @@
 					</div>
 				</div>
 			</section>
-		</main>
+
+			<!-- Projects Section-->
+			<section id="projects" class="projects-section">
+				<h2>Featured Projects</h2>
+
+				<!-- Controls: Search Bar & Category Filters-->
+				 <div class="project-controls">
+					<input type="text" id="search-input" placeholder="Search projects or tech stack..." />
+
+					<div class="filter-tabs">
+						<button class="filter-btn active" data-category="all">All</button>
+						<button class="filter-btn" data-category="Frontend">Frontend</button>
+						<button class="filter-btn" data-category="Full Stack">Full Stack</button>
+						<button class="filter-btn" data-category="Utilities">Utilities</button>
+					</div>
+				 </div>
+
+				 <!--Dynamic Project Grid Container -->
+				 <div id="projects-grid" class="projects-grid"></div>
+				 </section>
+
+				 <!--- Interactive Modal Preview Overlay -->
+				 <div id="project-model" class="modal-overlay hidden">
+					<div class="modal-contet glass-card">
+						<button id="close-modal" class="close-btn">&times;</button>
+						<img id="modal-image" src="" alt="Project Screenshot" />
+						<h3 id="modal-title">Project Title</h3>
+						<div id="modal-tech" class="tech-pills"></div>
+						<p id="modal-description"></p>
+						<div class="modal-links">
+							<a id="modal-demo" href="#" target="_blank">Live Demo</a>
+							<a id="modal-github" href="#" target="_blank">GitHub Repo</a>
+						</div>
+					</div>
+				</div>
+			</main>
 
 		<footer class="glass-footer">
 			<p>&copy; 2026 Ayomikun Adekoya. all rights reserved</p>
