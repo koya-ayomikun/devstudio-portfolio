@@ -162,3 +162,103 @@
   // Initial Render
   renderProjects(projectsData);
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  // 1. Fetch GitHub Stats via Async/Await
+  async function fetchGitHubStats(username) {
+    const statsContainer = document.getElementById('stats-container');
+    try {
+      const response = await fetch(`https://api.github.com/users/${username}`);
+      if (!response.ok) throw new Error('GitHub profile not found');
+      
+      const data = await response.json();
+      statsContainer.innerHTML = `
+        <div class="stats-grid">
+          <div class="stat-box"><h3>${data.public_repos}</h3><p>Public Repos</p></div>
+          <div class="stat-box"><h3>${data.followers}</h3><p>Followers</p></div>
+          <div class="stat-box"><h3>${data.following}</h3><p>Following</p></div>
+        </div>
+      `;
+    } catch (error) {
+      statsContainer.innerHTML = `<p style="color: #ff5f56;">Failed to load GitHub stats: ${error.message}</p>`;
+    }
+  }
+  fetchGitHubStats('octocat'); // Replace 'octocat' with your actual GitHub username
+
+  // 2. Interactive CLI / Retro Terminal Logic
+  const cliInput = document.getElementById('cli-input');
+  const terminalBody = document.getElementById('terminal-body');
+
+  const commands = {
+    help: "Available commands: <span class='highlight'>about, skills, projects, clear</span>",
+    about: "Ayomikun Adekoya - Web Developer specializing in dynamic frontend solutions.",
+    skills: "HTML5, CSS3, JavaScript ES6+, REST APIs, Git, UI/UX Glassmorphism",
+    projects: "Type 'projects' to view my latest showcase builds."
+  };
+
+  if (cliInput && terminalBody) {
+    cliInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const input = cliInput.value.trim().toLowerCase();
+        cliInput.value = '';
+
+        const cmdLine = document.createElement('div');
+        cmdLine.innerHTML = `<span class="prompt">koya@devstudio:~$</span> ${input}`;
+        terminalBody.appendChild(cmdLine);
+
+        const responseLine = document.createElement('div');
+        responseLine.className = 'terminal-output';
+
+        if (input === 'clear') {
+          terminalBody.innerHTML = '';
+          return;
+        } else if (commands[input]) {
+          responseLine.innerHTML = commands[input];
+        } else if (input !== '') {
+          responseLine.innerHTML = `Command not recognized: '${input}'. Type <span class='highlight'>'help'</span> for assistance.`;
+        }
+
+        terminalBody.appendChild(responseLine);
+        terminalBody.scrollTop = terminalBody.scrollHeight;
+      }
+    });
+  }
+
+  // 3. Testimonial Carousel Controls
+  const slides = document.querySelectorAll('.testimonial-card');
+  const dotsContainer = document.getElementById('carousel-dots');
+  let currentSlide = 0;
+
+  if (slides.length > 0 && dotsContainer) {
+    // Create indicators
+    slides.forEach((_, idx) => {
+      const dot = document.createElement('span');
+      dot.classList.add('dot');
+      if (idx === 0) dot.classList.add('active');
+      dot.addEventListener('click', () => showSlide(idx));
+      dotsContainer.appendChild(dot);
+    });
+
+    function showSlide(index) {
+      const dots = document.querySelectorAll('.dot');
+      slides[currentSlide].classList.remove('active');
+      if (dots[currentSlide]) dots[currentSlide].classList.remove('active');
+      
+      currentSlide = (index + slides.length) % slides.length;
+      
+      slides[currentSlide].classList.add('active');
+      if (dots[currentSlide]) dots[currentSlide].classList.add('active');
+    }
+
+    const nextBtn = document.getElementById('next-slide');
+    const prevBtn = document.getElementById('prev-slide');
+
+    if (nextBtn) nextBtn.addEventListener('click', () => showSlide(currentSlide + 1));
+    if (prevBtn) prevBtn.addEventListener('click', () => showSlide(currentSlide - 1));
+
+    // Autoplay slide interval
+    setInterval(() => showSlide(currentSlide + 1), 5000);
+  }
+
+});

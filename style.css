@@ -164,3 +164,111 @@ body {
   color: var(--text-color);
   cursor: pointer;
 }
+
+/* GitHub Stats Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  text-align: center;
+}
+
+.stat-box h3 {
+  font-size: 1.8rem;
+  color: var(--accent-color);
+  margin-bottom: 0.25rem;
+}
+
+/* CLI Retro Terminal */
+.terminal-window {
+  background: #090d16;
+  border-radius: 10px;
+  overflow: hidden;
+  font-family: 'Courier New', Courier, monospace;
+  color: #00ff66;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.terminal-header {
+  background: #1e293b;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+.btn.red { background: #ff5f56; }
+.btn.yellow { background: #ffbd2e; }
+.btn.green { background: #27c93f; }
+.terminal-title { margin-left: auto; margin-right: auto; color: #94a3b8; font-size: 0.8rem; }
+
+.terminal-body {
+  padding: 1rem;
+  height: 200px;
+  overflow-y: auto;
+}
+
+.terminal-input-line {
+  display: flex;
+  padding: 0.5rem 1rem;
+  background: #0f172a;
+}
+
+.prompt { color: #38bdf8; margin-right: 0.5rem; }
+
+#cli-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #00ff66;
+  font-family: inherit;
+  flex: 1;
+}
+
+/* Testimonial Carousel */
+.carousel-wrapper {
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+  text-align: center;
+}
+
+.testimonial-card {
+  display: none;
+  padding: 2rem;
+}
+
+.testimonial-card.active {
+  display: block;
+}
+
+.carousel-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.carousel-controls button {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  color: var(--text-color);
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+}
+
+.dot {
+  height: 10px;
+  width: 10px;
+  background-color: var(--glass-border);
+  border-radius: 50%;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.dot.active { background-color: var(--accent-color); }
