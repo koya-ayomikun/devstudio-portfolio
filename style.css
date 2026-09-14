@@ -3,7 +3,7 @@
 --bg-color: #0f172a;
 --text-color: #f8fafc;
 --glass-bg: rgba(255, 255, 255, 0.05);
---glass-border: rgba(255, 255, 255, 0.1);
+--glass-border: rgba(255, 255, 255, 0.15);
 --accent-color: #38bdf8;
 }
 
@@ -11,7 +11,7 @@ body.light-mode {
 --bg-color: #f8fafc;
 --text-color: #0f172a;
 --glass-bg: rgba(0, 0, 0, 0.05);
---glass-border: rgba(0, 0, 0, 0.1);
+--glass-border: rgba(0, 0, 0, 0.15);
 --accent-color: #0284c7;
 }
 
@@ -21,6 +21,25 @@ body {
  background-color: var(--bg-color);
  color: var(--text-color);
  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Hides labels visually while leaving them readable for screen readers */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Brightens placeholder text for better contrast ratios */
+::placeholder {
+  color: #94a3b8;
+  opacity: 1;
 }
 
 /* Glassmorphism Styling */
@@ -46,7 +65,7 @@ body {
   animation: fadeIn 1s ease-out;
 }
 
-/* Interactive Hover Elevation */
+/* Interactive Hover Elevation (FIXED: removed space in :hover selector) */
 .skill-card {
   padding: 1.5rem;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -152,6 +171,13 @@ body {
   width: 90%;
   max-width: 500px;
   padding: 2rem;
+}
+
+.modal-content img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 1rem;
 }
 
 .close-btn {
@@ -272,3 +298,83 @@ body {
 }
 
 .dot.active { background-color: var(--accent-color); }
+
+/* Contact Section & Form Styling */
+.contact-section {
+  max-width: 600px;
+  margin: 3rem auto;
+  padding: 0 1rem;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  text-align: left;
+}
+
+.form-group label {
+  font-size: 0.9rem;
+  color: var(--text-color, #fff);
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.form-group input.invalid,
+.form-group textarea.invalid {
+  border-color: #ff5f56;
+}
+
+.error-msg {
+  color: #ff5f56;
+  font-size: 0.8rem;
+  min-height: 1.2rem;
+}
+
+/* Toast Container & Notification Styling */
+.toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.toast {
+  min-width: 250px;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  color: #fff;
+  background: #1e293b;
+  border-left: 4px solid #38bdf8;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  animation: slideIn 0.3s ease-out forwards;
+}
+
+.toast.success { border-left-color: #27c93f; }
+.toast.error { border-left-color: #ff5f56; }
+
+@keyframes slideIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}

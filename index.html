@@ -4,6 +4,8 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial scale=1.0" /> 
+		<!--SEO Description for Lighthouse -->
+		<meta name="description" content="Ayomikun Adekoya's portfolio - A Frontend Developer building modern web applications with glassmorphism design." />
 		<title>Ayomikun Adekoya | devstudio-portfolio</title>
 		<link rel="stylesheet" href="style.css" />
 	</head>
@@ -20,9 +22,15 @@
 					<li>
 						<a href="#skills">Skills</a>
 					</li>
+					<li>
+						<a href="#projects">Projects</a>
+						</li>
+					<li>
+						<a href="#contact">Contact</a>
+						</li>
 				</ul>
-				<button id="theme-toggle" aria-label="Toggle Theme">🌙</button>
-				<button class="meatball" id="meatball">…</button>
+				<button id="theme-toggle" aria-label="Toggle Dark and Light Theme">🌙</button>
+				<button class="meatball" id="meatball" aria-label="Open Navigation Menu">…</button>
 			</nav>
 		</header>
 
@@ -55,6 +63,8 @@
 
 				<!-- Controls: Search Bar & Category Filters-->
 				 <div class="project-controls">
+					<!-- FIX: Added label and aria-label for Search Input Accessibility -->
+					<label for="search-input" class="visually-hidden">Search Projects</label>
 					<input type="text" id="search-input" placeholder="Search projects or tech stack..." />
 
 					<div class="filter-tabs">
@@ -70,16 +80,17 @@
 				 </section>
 
 				 <!--- Interactive Modal Preview Overlay -->
-				 <div id="project-model" class="modal-overlay hidden">
+				 <div id="project-model" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
 					<div class="modal-contet glass-card">
 						<button id="close-modal" class="close-btn">&times;</button>
-						<img id="modal-image" src="" alt="Project Screenshot" />
+						<!-- FIX: Lazy loading and fallback alt attribute for modal images -->
+						<img id="modal-image" src="" alt="Project Screenshot Preview" loading="lazy" width="600" height="350" />
 						<h3 id="modal-title">Project Title</h3>
 						<div id="modal-tech" class="tech-pills"></div>
 						<p id="modal-description"></p>
 						<div class="modal-links">
-							<a id="modal-demo" href="#" target="_blank">Live Demo</a>
-							<a id="modal-github" href="#" target="_blank">GitHub Repo</a>
+							<a id="modal-demo" href="#" target="_blank" rel="noopener noreferrer">Live Demo</a>
+							<a id="modal-github" href="#" target="_blank" rel="noopener noreferrer">GitHub Repo</a>
 						</div>
 					</div>
 				</div>
@@ -106,6 +117,8 @@
 						</div>
 						<div class="terminal-input-line">
 							<span class="prompt">koya@devstudio~$</span>
+							<!-- FIX: Added label and aria-label for CLI Input Accessibility -->
+							<label for="cli-input" class="visually-hidden">Terminal Input</label>
 							<input type="text" id="cli-input" placeholder="type command..." autofocus />
 						</div>
 					</div>
@@ -126,12 +139,42 @@
 							</div>
 						</div>
 						<div class="carousel-controls">
-							<button id="prev-slide">&lt;</button>
+							<button id="prev-slide" aria-label="Previous Testimonial Slide">&lt;</button>
 							<div class="carousel-dots" id="carousel-dots"></div>
-							<button id="next-slide">&gt;</button>
+							<button id="next-slide" aria-label="Next Testimonial Slide">&gt;</button>
 						</div>
 					</div>
 				   </section>
+
+				<!-- Contact Studio Section -->
+				 <section id="contact" class="contact-section">
+					<h2>Contact DevStudio</h2>
+					<form id="contact-form" class="glass-card contact-form" novalidate>
+						<div class="form-group">
+							<!-- FIX: Form label matches purpose correctly -->
+							<label for="name">Full Name</label>
+							<input type="text" id="name" name="name" required placeholder="Ayomikun Adekoya" aria-required="true" />
+							<span class="error-message" id="name-error"></span>
+						</div>
+
+						<div class="form-group">
+							<label for="email">Email Address</label>
+							<input type="email" id="email" name="email" required placeholder="koyayomikun@gmail.com" aria-required="true" />
+							<span class="error-message" id="email-error"></span>
+						</div>
+
+						<div class="form-group">
+							<label for="message">Your Message</label>
+							<textarea id="message" name="message" rows="5" required placeholder="Enter your message here..." aria-required="true"></textarea>
+							<span class="error-message" id="message-error"></span>
+						</div>
+
+						<button type="submit" id="submit-btn">Send Message</button>
+					</form>
+				</section>
+				<!-- Toast Container for Notifications -->
+				 <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
 			</main>
 
 		<footer class="glass-footer">

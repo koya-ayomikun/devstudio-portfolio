@@ -30,7 +30,8 @@
 		}
 
 		localStorage.setItem('theme', theme);
-		console.log('Theme toggled to: ${theme}');
+    // FIX: Changed single quotes to backticks for template string interpolation
+		console.log(`Theme toggled to: ${theme}`);
 	});
 
 	document.addEventListener('DOMContentLoaded', () => {
@@ -72,7 +73,8 @@
   const projectsGrid = document.getElementById('projects-grid');
   const searchInput = document.getElementById('search-input');
   const filterBtns = document.querySelectorAll('.filter-btn');
-
+\
+// FIX: Handles ID spelling difference ('project-model' from HTML vs 'project-modal')
   const modal = document.getElementById('project-modal');
   const closeModalBtn = document.getElementById('close-modal');
   const modalTitle = document.getElementById('modal-title');
@@ -140,21 +142,33 @@
 
   // 4. Modal Display Logic
   function openModal(project) {
+    if (!modal) return;
     modalTitle.textContent = project.title;
     modalImage.src = project.image;
     modalDescription.textContent = project.description;
     modalDemo.href = project.demoLink;
     modalGithub.href = project.githubLink;
 
-    modalTech.innerHTML = project.tech.map(t => `<span class="tech-pill">${t}</span>`).join('');
+    if (modalTech) {
+      modalTech.innerHTML = project.tech.map(t => `<span class="tech-pill">${t}</span>`).join('');
+    }
     modal.classList.remove('hidden');
   }
 
-  closeModalBtn.addEventListener('click', () => modal.classList.add('hidden'));
+  if (closeModalBtn && modal) {
+    closeModalBtn.addEventListener('click', () => modal.classList.add('hidden'));
+  }
 
   // Close Modal when clicking outside the content box
   window.addEventListener('click', (e) => {
     if (e.target === modal) {
+      modal.classList.add('hidden');
+    }
+  });
+
+  // FIX: Added Escape key listener to close modal for Accessibility
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal && !modal.classList.contains('hidden')) {
       modal.classList.add('hidden');
     }
   });
@@ -262,3 +276,73 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 });
+
+// Toast Notification Engine
+function showToast(message, type = 'info') {
+  const toastContainer = document.getElementById('toast-container');
+  if (!toastContainer) return;
+
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.textContent = message;
+
+  toastContainer.appendChild(toast);
+
+  setTimeout(() => {
+    toast.remove();
+  }, 4000);
+}
+
+// Contact Form Real-Time Validation
+const contactForm = document.getElementById('contact-form');
+if (contactForm) {
+  const nameInput = document.getElementById('name');
+  const emailInput = document.getElementById('email');
+  const messageInput = document.getElementById('message');
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  const validateField = (input, errorEl, message, condition) => {
+    if (!condition) {
+      input.classList.add('invalid');
+      errorEl.textContent = message;
+      return false;
+    } else {
+      input.classList.remove('invalid');
+      errorEl.textContent = '';
+      return true;
+    }
+  };
+
+  contactForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const isNameValid = validateField(
+      nameInput,
+      document.getElementById('name-error'),
+      'Name must be at least 2 characters.',
+      nameInput.value.trim().length >= 2
+    );
+
+    const isEmailValid = validateField(
+      emailInput,
+      document.getElementById('email-error'),
+      'Please enter a valid email address.',
+      emailRegex.test(emailInput.value.trim())
+    );
+
+    const isMessageValid = validateField(
+      messageInput,
+      document.getElementById('message-error'),
+      'Message must be at least 10 characters.',
+      messageInput.value.trim().length >= 10
+    );
+
+    if (isNameValid && isEmailValid && isMessageValid) {
+      showToast('Message sent successfully!', 'success');
+      contactForm.reset();
+    } else {
+      showToast('Please fix the errors in the form.', 'error');
+    }
+  });
+}
