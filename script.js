@@ -30,7 +30,6 @@
 		}
 
 		localStorage.setItem('theme', theme);
-    // FIX: Changed single quotes to backticks for template string interpolation
 		console.log(`Theme toggled to: ${theme}`);
 	});
 
@@ -149,15 +148,12 @@
     modalDemo.href = project.demoLink;
     modalGithub.href = project.githubLink;
 
-    if (modalTech) {
       modalTech.innerHTML = project.tech.map(t => `<span class="tech-pill">${t}</span>`).join('');
-    }
+
     modal.classList.remove('hidden');
   }
 
-  if (closeModalBtn && modal) {
     closeModalBtn.addEventListener('click', () => modal.classList.add('hidden'));
-  }
 
   // Close Modal when clicking outside the content box
   window.addEventListener('click', (e) => {
